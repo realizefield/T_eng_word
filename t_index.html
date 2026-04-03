@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ターゲット1900 学習トップ</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height:100vh;}
+.header{background:linear-gradient(135deg,#7c2d12,#dc2626);color:white;padding:16px 20px 20px;}
+.header h1{font-size:1.25rem;margin-bottom:4px;}
+.header p{font-size:0.78rem;opacity:.85;}
+.dashboard{display:flex;gap:12px;padding:14px 16px;max-width:860px;margin:0 auto;flex-wrap:wrap;}
+.dash-card{background:white;border-radius:14px;padding:14px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.08);flex:1;min-width:130px;text-align:center;}
+.dash-big{font-size:2rem;font-weight:bold;line-height:1;}
+.dash-lbl{font-size:0.7rem;color:#888;margin-top:4px;}
+.dash-card.streak .dash-big{color:#E36C09;}
+.dash-card.done .dash-big{color:#22a06b;}
+.dash-card.total .dash-big{color:#dc2626;}
+.overall-bar-wrap{background:#eee;border-radius:99px;height:8px;margin-top:8px;overflow:hidden;}
+.overall-bar{background:linear-gradient(90deg,#dc2626,#22a06b);height:8px;border-radius:99px;transition:width .6s;}
+.sec-title{font-size:0.9rem;font-weight:bold;color:#7c2d12;padding:14px 16px 6px;max-width:860px;margin:0 auto;}
+.cat-list{display:flex;flex-direction:column;gap:10px;padding:0 16px 100px;max-width:860px;margin:0 auto;}
+.cat-card{background:white;border-radius:14px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.07);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.cat-card:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,0.12);}
+.cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cat-name{font-weight:bold;font-size:0.95rem;color:#7c2d12;}
+.cat-badge{font-size:0.72rem;background:#fef2f2;color:#dc2626;border-radius:8px;padding:2px 8px;font-weight:bold;}
+.cat-badge.done-all{background:#e6f4ee;color:#22a06b;}
+.cat-progress-wrap{background:#f0f4f8;border-radius:99px;height:8px;overflow:hidden;}
+.cat-progress{height:8px;border-radius:99px;background:linear-gradient(90deg,#dc2626,#f87171);transition:width .5s;}
+.cat-units{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.unit-dot{min-width:54px;height:34px;border-radius:10px;border:2px solid #fecaca;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:bold;color:#aaa;cursor:pointer;transition:all .15s;background:white;padding:0 6px;}
+.unit-dot:hover{border-color:#dc2626;color:#dc2626;transform:scale(1.05);}
+.unit-dot.cleared{background:linear-gradient(135deg,#22a06b,#145e3e);border-color:#22a06b;color:white;}
+.unit-dot.best{background:linear-gradient(135deg,#E36C09,#c45400);border-color:#E36C09;color:white;}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📕 ターゲット1900　大学入試英単語</h1>
+  <p>1900語・95単元（20語×95）　─　大学入試を突破しよう！</p>
+</div>
+<div class="dashboard">
+  <div class="dash-card streak">
+    <div class="dash-big" id="streakNum">0</div>
+    <div class="dash-lbl">🔥 連続学習日数</div>
+  </div>
+  <div class="dash-card done">
+    <div class="dash-big" id="doneNum">0</div>
+    <div class="dash-lbl">✅ クリア済み単元</div>
+    <div class="overall-bar-wrap"><div class="overall-bar" id="overallBar" style="width:0%"></div></div>
+  </div>
+  <div class="dash-card total">
+    <div class="dash-big">95</div>
+    <div class="dash-lbl">📖 全単元数</div>
+  </div>
+</div>
+<div style="max-width:860px;margin:0 auto 0;padding:0 16px 10px;text-align:right;">
+  <button onclick="window.location.href='t_review.html'" style="padding:10px 22px;background:linear-gradient(135deg,#b45309,#f59e0b);color:white;border:none;border-radius:22px;font-size:0.88rem;font-weight:bold;cursor:pointer;box-shadow:0 3px 8px rgba(180,83,9,0.3);">
+    ⭐ 復習テスト
+  </button>
+</div>
+<div class="sec-title">📂 単元一覧（100語ごとにグループ）</div>
+<div class="cat-list" id="catList"></div>
+<script>
+const UNITS_INFO=[{"idx": 0, "start": 1, "end": 20, "file": "T_001.html"}, {"idx": 1, "start": 21, "end": 40, "file": "T_002.html"}, {"idx": 2, "start": 41, "end": 60, "file": "T_003.html"}, {"idx": 3, "start": 61, "end": 80, "file": "T_004.html"}, {"idx": 4, "start": 81, "end": 100, "file": "T_005.html"}, {"idx": 5, "start": 101, "end": 120, "file": "T_006.html"}, {"idx": 6, "start": 121, "end": 140, "file": "T_007.html"}, {"idx": 7, "start": 141, "end": 160, "file": "T_008.html"}, {"idx": 8, "start": 161, "end": 180, "file": "T_009.html"}, {"idx": 9, "start": 181, "end": 200, "file": "T_010.html"}, {"idx": 10, "start": 201, "end": 220, "file": "T_011.html"}, {"idx": 11, "start": 221, "end": 240, "file": "T_012.html"}, {"idx": 12, "start": 241, "end": 260, "file": "T_013.html"}, {"idx": 13, "start": 261, "end": 280, "file": "T_014.html"}, {"idx": 14, "start": 281, "end": 300, "file": "T_015.html"}, {"idx": 15, "start": 301, "end": 320, "file": "T_016.html"}, {"idx": 16, "start": 321, "end": 340, "file": "T_017.html"}, {"idx": 17, "start": 341, "end": 360, "file": "T_018.html"}, {"idx": 18, "start": 361, "end": 380, "file": "T_019.html"}, {"idx": 19, "start": 381, "end": 400, "file": "T_020.html"}, {"idx": 20, "start": 401, "end": 420, "file": "T_021.html"}, {"idx": 21, "start": 421, "end": 440, "file": "T_022.html"}, {"idx": 22, "start": 441, "end": 460, "file": "T_023.html"}, {"idx": 23, "start": 461, "end": 480, "file": "T_024.html"}, {"idx": 24, "start": 481, "end": 500, "file": "T_025.html"}, {"idx": 25, "start": 501, "end": 520, "file": "T_026.html"}, {"idx": 26, "start": 521, "end": 540, "file": "T_027.html"}, {"idx": 27, "start": 541, "end": 560, "file": "T_028.html"}, {"idx": 28, "start": 561, "end": 580, "file": "T_029.html"}, {"idx": 29, "start": 581, "end": 600, "file": "T_030.html"}, {"idx": 30, "start": 601, "end": 620, "file": "T_031.html"}, {"idx": 31, "start": 621, "end": 640, "file": "T_032.html"}, {"idx": 32, "start": 641, "end": 660, "file": "T_033.html"}, {"idx": 33, "start": 661, "end": 680, "file": "T_034.html"}, {"idx": 34, "start": 681, "end": 700, "file": "T_035.html"}, {"idx": 35, "start": 701, "end": 720, "file": "T_036.html"}, {"idx": 36, "start": 721, "end": 740, "file": "T_037.html"}, {"idx": 37, "start": 741, "end": 760, "file": "T_038.html"}, {"idx": 38, "start": 761, "end": 780, "file": "T_039.html"}, {"idx": 39, "start": 781, "end": 800, "file": "T_040.html"}, {"idx": 40, "start": 801, "end": 820, "file": "T_041.html"}, {"idx": 41, "start": 821, "end": 840, "file": "T_042.html"}, {"idx": 42, "start": 841, "end": 860, "file": "T_043.html"}, {"idx": 43, "start": 861, "end": 880, "file": "T_044.html"}, {"idx": 44, "start": 881, "end": 900, "file": "T_045.html"}, {"idx": 45, "start": 901, "end": 920, "file": "T_046.html"}, {"idx": 46, "start": 921, "end": 940, "file": "T_047.html"}, {"idx": 47, "start": 941, "end": 960, "file": "T_048.html"}, {"idx": 48, "start": 961, "end": 980, "file": "T_049.html"}, {"idx": 49, "start": 981, "end": 1000, "file": "T_050.html"}, {"idx": 50, "start": 1001, "end": 1020, "file": "T_051.html"}, {"idx": 51, "start": 1021, "end": 1040, "file": "T_052.html"}, {"idx": 52, "start": 1041, "end": 1060, "file": "T_053.html"}, {"idx": 53, "start": 1061, "end": 1080, "file": "T_054.html"}, {"idx": 54, "start": 1081, "end": 1100, "file": "T_055.html"}, {"idx": 55, "start": 1101, "end": 1120, "file": "T_056.html"}, {"idx": 56, "start": 1121, "end": 1140, "file": "T_057.html"}, {"idx": 57, "start": 1141, "end": 1160, "file": "T_058.html"}, {"idx": 58, "start": 1161, "end": 1180, "file": "T_059.html"}, {"idx": 59, "start": 1181, "end": 1200, "file": "T_060.html"}, {"idx": 60, "start": 1201, "end": 1220, "file": "T_061.html"}, {"idx": 61, "start": 1221, "end": 1240, "file": "T_062.html"}, {"idx": 62, "start": 1241, "end": 1260, "file": "T_063.html"}, {"idx": 63, "start": 1261, "end": 1280, "file": "T_064.html"}, {"idx": 64, "start": 1281, "end": 1300, "file": "T_065.html"}, {"idx": 65, "start": 1301, "end": 1320, "file": "T_066.html"}, {"idx": 66, "start": 1321, "end": 1340, "file": "T_067.html"}, {"idx": 67, "start": 1341, "end": 1360, "file": "T_068.html"}, {"idx": 68, "start": 1361, "end": 1380, "file": "T_069.html"}, {"idx": 69, "start": 1381, "end": 1400, "file": "T_070.html"}, {"idx": 70, "start": 1401, "end": 1420, "file": "T_071.html"}, {"idx": 71, "start": 1421, "end": 1440, "file": "T_072.html"}, {"idx": 72, "start": 1441, "end": 1460, "file": "T_073.html"}, {"idx": 73, "start": 1461, "end": 1480, "file": "T_074.html"}, {"idx": 74, "start": 1481, "end": 1500, "file": "T_075.html"}, {"idx": 75, "start": 1501, "end": 1520, "file": "T_076.html"}, {"idx": 76, "start": 1521, "end": 1540, "file": "T_077.html"}, {"idx": 77, "start": 1541, "end": 1560, "file": "T_078.html"}, {"idx": 78, "start": 1561, "end": 1580, "file": "T_079.html"}, {"idx": 79, "start": 1581, "end": 1600, "file": "T_080.html"}, {"idx": 80, "start": 1601, "end": 1620, "file": "T_081.html"}, {"idx": 81, "start": 1621, "end": 1640, "file": "T_082.html"}, {"idx": 82, "start": 1641, "end": 1660, "file": "T_083.html"}, {"idx": 83, "start": 1661, "end": 1680, "file": "T_084.html"}, {"idx": 84, "start": 1681, "end": 1700, "file": "T_085.html"}, {"idx": 85, "start": 1701, "end": 1720, "file": "T_086.html"}, {"idx": 86, "start": 1721, "end": 1740, "file": "T_087.html"}, {"idx": 87, "start": 1741, "end": 1760, "file": "T_088.html"}, {"idx": 88, "start": 1761, "end": 1780, "file": "T_089.html"}, {"idx": 89, "start": 1781, "end": 1800, "file": "T_090.html"}, {"idx": 90, "start": 1801, "end": 1820, "file": "T_091.html"}, {"idx": 91, "start": 1821, "end": 1840, "file": "T_092.html"}, {"idx": 92, "start": 1841, "end": 1860, "file": "T_093.html"}, {"idx": 93, "start": 1861, "end": 1880, "file": "T_094.html"}, {"idx": 94, "start": 1881, "end": 1900, "file": "T_095.html"}];
+const TOTAL_UNITS=95;
+const LS_PROGRESS='t1900_progress';
+const LS_STREAK='t1900_streak';
+const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+function fmtT(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function updateStreak(){
+  const today=new Date().toISOString().slice(0,10);
+  let s=lsGet(LS_STREAK)||{lastDate:null,count:0};
+  if(s.lastDate===today)return s.count;
+  const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  s.count=(s.lastDate===yesterday)?s.count+1:1;
+  s.lastDate=today;lsSet(LS_STREAK,s);return s.count;
+}
+// 100語グループ（19グループ）
+const GROUPS=[];
+for(let g=0;g<19;g++){
+  const startW=g*100+1, endW=Math.min((g+1)*100,1900);
+  const unitStart=g*5, unitEnd=Math.min(unitStart+5,TOTAL_UNITS);
+  GROUPS.push({name:`${startW}〜${endW}`,units:UNITS_INFO.slice(unitStart,unitEnd)});
+}
+function render(){
+  const prog=lsGet(LS_PROGRESS)||{};
+  document.getElementById('streakNum').textContent=updateStreak();
+  const doneUnits=Object.values(prog).filter(v=>v&&v.cleared).length;
+  document.getElementById('doneNum').textContent=doneUnits;
+  document.getElementById('overallBar').style.width=(doneUnits/TOTAL_UNITS*100)+'%';
+  const list=document.getElementById('catList');list.innerHTML='';
+  GROUPS.forEach((grp,gi)=>{
+    const doneCat=grp.units.filter(u=>{const p=prog['T_'+String(u.idx+1).padStart(3,'0')+'_p'];return p&&p.cleared;}).length;
+    const pct=Math.round(doneCat/grp.units.length*100);
+    const card=document.createElement('div');card.className='cat-card';
+    const badge=doneCat===grp.units.length?'<span class="cat-badge done-all">✅ 完了</span>':'<span class="cat-badge">'+doneCat+'/'+grp.units.length+' 単元</span>';
+    card.innerHTML='<div class="cat-head"><span class="cat-name">📖 '+grp.name+'</span>'+badge+'</div>'+'<div class="cat-progress-wrap"><div class="cat-progress" style="width:'+pct+'%"></div></div>'+'<div class="cat-units" id="grp_'+gi+'"></div>';
+    list.appendChild(card);
+    const unitsDiv=card.querySelector('#grp_'+gi);
+    grp.units.forEach(u=>{
+      const pkey='T_'+String(u.idx+1).padStart(3,'0')+'_p';
+      const p=prog[pkey];
+      const dot=document.createElement('div');
+      dot.className='unit-dot'+(p&&p.cleared?(p.bestSec?' best':' cleared'):'');
+      dot.textContent=u.start+'〜'+u.end;
+      dot.title=p&&p.bestSec?'ベスト:'+fmtT(p.bestSec):(p&&p.cleared?'クリア済み':'未挑戦');
+      dot.addEventListener('click',e=>{e.stopPropagation();window.location.href=u.file;});
+      unitsDiv.appendChild(dot);
+    });
+    card.addEventListener('click',()=>{
+      const firstNotDone=grp.units.find(u=>{const p=prog['T_'+String(u.idx+1).padStart(3,'0')+'_p'];return!(p&&p.cleared);});
+      window.location.href=(firstNotDone||grp.units[0]).file;
+    });
+  });
+}
+render();
+</script>
+</body>
+</html>
