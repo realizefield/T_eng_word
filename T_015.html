@@ -25,6 +25,7 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
 .timer-row{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 8px;max-width:700px;margin:0 auto;}
 .timer-disp{font-size:1.4rem;font-weight:bold;color:#7c2d12;letter-spacing:2px;}
 .step-label{font-size:0.75rem;font-weight:bold;color:#dc2626;background:#fef2f2;padding:3px 10px;border-radius:20px;}
+/* 一覧 */
 .wordlist-wrap{max-width:720px;margin:0 auto;padding:0 16px;}
 .wordlist-title{text-align:center;margin-bottom:10px;}
 .wordlist-title h2{font-size:1rem;font-weight:bold;color:#7c2d12;}
@@ -52,47 +53,44 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
 .flash-phase-label{text-align:center;margin-bottom:5px;}
 .flash-phase-badge{display:inline-block;padding:3px 14px;border-radius:20px;font-size:0.76rem;font-weight:bold;}
 .flash-phase-badge.phaseA{background:#fef2f2;color:#dc2626;}.flash-phase-badge.phaseB{background:#e6f4ee;color:#145e3e;}
-/* 音声ボタンエリア（カード外・上部） */
-.speak-panel{background:white;border-radius:14px;padding:10px 14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(124,45,18,0.1);}
-.speak-panel-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.speak-panel-title{font-size:0.72rem;font-weight:bold;color:#7c2d12;}
+/* ⭐ & 速度（カード外） */
+.flash-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;}
 .flash-star-btn{font-size:1.4rem;background:none;border:none;cursor:pointer;line-height:1;transition:transform .15s;}
 .flash-star-btn:hover{transform:scale(1.2);}
-.speak-btns-row{display:flex;gap:8px;justify-content:center;}
-.speak-btn-word{background:linear-gradient(135deg,#dc2626,#7c2d12);border:none;border-radius:18px;padding:7px 16px;cursor:pointer;display:flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(124,45,18,0.3);transition:transform .15s;color:white;font-size:0.78rem;font-weight:bold;}
-.speak-btn-full{background:linear-gradient(135deg,#2563eb,#1e3a8a);border:none;border-radius:18px;padding:7px 16px;cursor:pointer;display:flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(30,58,138,0.3);transition:transform .15s;color:white;font-size:0.78rem;font-weight:bold;}
-.speak-btn-word:hover,.speak-btn-full:hover{transform:scale(1.05);}
-.speak-btn-word svg,.speak-btn-full svg{width:13px;height:13px;fill:white;flex-shrink:0;}
-/* 速度コントロール */
-.speed-area{background:white;border-radius:14px;padding:8px 14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(124,45,18,0.08);}
-.speed-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.speed-label{font-size:0.72rem;color:#555;font-weight:bold;white-space:nowrap;}
+.speed-ctrl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.speed-ctrl label{font-size:0.72rem;color:#555;font-weight:bold;}
 .speed-btns{display:flex;gap:4px;}
 .spd-btn{padding:4px 9px;border:2px solid #fca5a5;border-radius:12px;background:white;font-size:0.74rem;cursor:pointer;font-weight:bold;color:#555;transition:all .15s;}
 .spd-btn.active{border-color:#dc2626;background:#dc2626;color:white;}
 .spd-btn.disabled-btn{opacity:0.4;cursor:not-allowed;}
-.speed-note{font-size:0.68rem;color:#888;margin-top:4px;line-height:1.4;}
+/* 速度注意書き */
+.speed-note{font-size:0.68rem;color:#888;margin-bottom:6px;text-align:center;}
 .speed-note.warn{color:#b45309;font-weight:bold;}
 /* カード本体 */
-.flash-card{background:white;border-radius:16px;box-shadow:0 4px 18px rgba(124,45,18,0.13);padding:18px 18px 12px;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;position:relative;margin-bottom:6px;}
+.flash-card{background:white;border-radius:20px;box-shadow:0 6px 24px rgba(124,45,18,0.15);padding:18px 18px 14px;text-align:center;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;cursor:pointer;transition:transform .15s;position:relative;margin-bottom:8px;}
 .flash-card:active{transform:scale(0.97);}
 .flash-tap-hint{font-size:0.66rem;color:#ccc;margin-bottom:5px;}
 .flash-front,.flash-back{width:100%;}
 .flash-en{font-size:1.9rem;font-weight:bold;color:#7c2d12;margin-bottom:2px;}
 .flash-kana{font-size:0.86rem;color:#888;margin-bottom:8px;}
+/* 音声ボタン2つ（カード内・短文上） */
+.speak-btns-row{display:flex;gap:8px;justify-content:center;margin-bottom:8px;flex-wrap:wrap;}
+.speak-btn-word{background:linear-gradient(135deg,#dc2626,#7c2d12);border:none;border-radius:18px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(124,45,18,0.3);transition:transform .15s;color:white;font-size:0.76rem;font-weight:bold;}
+.speak-btn-full{background:linear-gradient(135deg,#2563eb,#1e3a8a);border:none;border-radius:18px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(30,58,138,0.3);transition:transform .15s;color:white;font-size:0.76rem;font-weight:bold;}
+.speak-btn-word:hover,.speak-btn-full:hover{transform:scale(1.05);}
+.speak-btn-word svg,.speak-btn-full svg{width:13px;height:13px;fill:white;flex-shrink:0;}
 .flash-sentence-box{background:#fef2f2;border-radius:8px;padding:7px 10px;text-align:left;width:100%;}
 .flash-sentence-en{font-size:0.83rem;color:#333;line-height:1.6;}
 .flash-ja{font-size:1.25rem;color:#dc2626;font-weight:bold;margin-bottom:6px;}
 .flash-trans-box{background:#f0f9f4;border-radius:8px;padding:7px 10px;text-align:left;width:100%;}
 .flash-sentence-ja{font-size:0.81rem;color:#333;line-height:1.6;}
-.flash-counter{font-size:0.7rem;color:#aaa;margin-top:7px;}
+.flash-counter{font-size:0.7rem;color:#aaa;margin-top:8px;}
 .flash-progress{width:100%;background:#eee;border-radius:99px;height:4px;margin-top:5px;overflow:hidden;}
 .flash-bar{height:4px;border-radius:99px;background:linear-gradient(90deg,#dc2626,#22a06b);transition:width .3s;}
-.pause-overlay{display:none;position:absolute;inset:0;background:rgba(124,45,18,0.85);border-radius:16px;flex-direction:column;align-items:center;justify-content:center;color:white;gap:10px;z-index:10;}
+.pause-overlay{display:none;position:absolute;inset:0;background:rgba(124,45,18,0.85);border-radius:20px;flex-direction:column;align-items:center;justify-content:center;color:white;gap:10px;z-index:10;}
 .pause-overlay.show{display:flex;}
 .po-icon{font-size:2rem;}.po-msg{font-size:0.95rem;font-weight:bold;}
 .po-resume{padding:8px 20px;background:#22a06b;border:none;border-radius:18px;color:white;font-size:0.88rem;font-weight:bold;cursor:pointer;}
-/* ナビボタン */
 .flash-controls{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;}
 .fc-btn{padding:8px 13px;border:none;border-radius:16px;font-size:0.78rem;font-weight:bold;cursor:pointer;transition:all .15s;}
 .fc-btn:hover{transform:translateY(-2px);}
@@ -116,6 +114,7 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
 .dropzone:hover{border-color:#dc2626;background:#fef2f2;}.dropzone.correct{border-color:#22a06b;background:#e6f4ee;}.dropzone.wrong{border-color:#e53935;background:#fdecea;animation:shake .3s;}
 .placed{display:inline-block;padding:3px 10px;border-radius:12px;background:linear-gradient(135deg,#dc2626,#7c2d12);color:white;font-size:0.8rem;font-weight:bold;cursor:pointer;}
 .dropzone.correct .placed{background:linear-gradient(135deg,#22a06b,#145e3e);cursor:default;}
+/* クイズ・つづり */
 .quiz-wrap{max-width:500px;margin:0 auto;padding:0 16px;}
 .score-bar{max-width:500px;margin:0 auto 8px;background:white;border-radius:12px;padding:8px 14px;box-shadow:0 2px 10px rgba(0,0,0,0.08);display:none;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;}
 .score-bar.show{display:flex;}
@@ -217,28 +216,11 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
   <div class="flash-wrap">
     <div class="flash-phase-label"><span class="flash-phase-badge phaseA" id="flashPhaseBadge">フェーズA：英語→意味</span></div>
 
-    <!-- 音声ボタンパネル（カード外） -->
-    <div class="speak-panel">
-      <div class="speak-panel-top">
-        <span class="speak-panel-title">🔈 音声</span>
-        <button class="flash-star-btn" id="flashStarBtn" onclick="toggleFlashStar()">☆</button>
-      </div>
-      <div class="speak-btns-row">
-        <button class="speak-btn-word" onclick="speakWord()">
-          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          🔴 単語のみ
-        </button>
-        <button class="speak-btn-full" id="btnSpeakFull" onclick="speakFull()">
-          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          🔵 単語＋短文
-        </button>
-      </div>
-    </div>
-
-    <!-- 速度コントロール（カード外） -->
-    <div class="speed-area">
-      <div class="speed-row">
-        <span class="speed-label">⏱ 自動速度：</span>
+    <!-- ⭐ & 速度（カード外） -->
+    <div class="flash-meta">
+      <button class="flash-star-btn" id="flashStarBtn" onclick="toggleFlashStar()">☆</button>
+      <div class="speed-ctrl">
+        <label>⏱ 自動速度：</label>
         <div class="speed-btns" id="speedBtns">
           <button class="spd-btn" data-sec="2">2秒</button>
           <button class="spd-btn active" data-sec="3">3秒</button>
@@ -246,20 +228,34 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
           <button class="spd-btn" data-sec="0">手動</button>
         </div>
       </div>
-      <div class="speed-note" id="speedNote">⬆️ 単語のみ再生時に有効</div>
-      <div class="speed-note warn" id="speedWarn" style="display:none;">⚠️ 単語＋短文モードでは速度設定は無効です。短文の読み上げ終了後に自動で次へ進みます。</div>
     </div>
+    <!-- 速度注意書き -->
+    <div class="speed-note" id="speedNote">※ 単語のみ再生時に有効</div>
+    <div class="speed-note warn" id="speedWarn" style="display:none;">⚠️ 単語＋短文モードでは速度設定は無効。短文読み上げ終了後に次へ自動で進みます。</div>
 
     <!-- カード本体 -->
     <div class="flash-card" id="flashCard" onclick="onFlashTap()">
+      <!-- 表面 -->
       <div class="flash-front" id="flashFront">
         <div class="flash-tap-hint">タップして意味を確認</div>
         <div class="flash-en" id="flashEn">-</div>
         <div class="flash-kana" id="flashKana">-</div>
+        <!-- 音声ボタン2つ（カード内） -->
+        <div class="speak-btns-row" onclick="event.stopPropagation()">
+          <button class="speak-btn-word" id="btnSpeakWord" onclick="speakWord()">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            🔴 単語のみ
+          </button>
+          <button class="speak-btn-full" id="btnSpeakFull" onclick="speakFull()">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            🔵 単語＋短文
+          </button>
+        </div>
         <div class="flash-sentence-box">
           <div class="flash-sentence-en" id="flashSentenceEn"></div>
         </div>
       </div>
+      <!-- 裏面 -->
       <div class="flash-back" id="flashBack" style="display:none;">
         <div class="flash-ja" id="flashJa">-</div>
         <div class="flash-trans-box">
@@ -292,7 +288,6 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
     <table class="tap-table"><thead><tr><th>意味</th><th>英単語</th></tr></thead><tbody id="tapBody"></tbody></table>
   </div>
 </div>
-
 <!-- STEP3 -->
 <div id="step3" style="display:none;">
   <div class="quiz-wrap">
@@ -303,15 +298,13 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
     </div>
     <div class="quiz-card">
       <div id="qSpeakWrap" style="display:flex;justify-content:center;margin-bottom:8px;"></div>
-      <div class="quiz-q" id="quizQ">-</div>
-      <div class="quiz-qkana" id="quizQkana"></div>
+      <div class="quiz-q" id="quizQ">-</div><div class="quiz-qkana" id="quizQkana"></div>
       <div class="quiz-num" id="quizNum">1/20</div>
     </div>
     <div class="choices" id="choices"></div>
     <div class="quiz-result" id="quizResult"></div>
   </div>
 </div>
-
 <!-- STEP4 -->
 <div id="step4" style="display:none;">
   <div class="spell-wrap">
@@ -323,15 +316,13 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height
     </div>
     <div class="spell-card">
       <div id="spSpeakWrap" style="display:flex;justify-content:center;margin-bottom:7px;"></div>
-      <div class="spell-ja" id="spellJa">-</div>
-      <div class="spell-kana" id="spellKana">-</div>
+      <div class="spell-ja" id="spellJa">-</div><div class="spell-kana" id="spellKana">-</div>
       <div class="spell-num" id="spellNum">1/20</div>
     </div>
     <div class="spell-choices" id="spellChoices"></div>
     <div class="spell-result" id="spellResult"></div>
   </div>
 </div>
-
 <div class="complete-screen" id="completeScreen">
   <div style="font-size:2.8rem;margin-bottom:8px;">🎉</div>
   <h2>単元クリア！</h2><p id="completeMsg"></p>
@@ -373,24 +364,15 @@ function loadEnVoice(){const vs=synth.getVoices();const pref=['en-US','en-GB','e
 if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=loadEnVoice;loadEnVoice();
 function speak(t){synth.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.85;if(_enVoice)u.voice=_enVoice;synth.speak(u);}
 function speakIfOn(t){if(!isMuted)speak(t);}
-// 単語のみ音声
 function speakWord(){const w=WORDS[flashIdx];if(w&&!isMuted)speak(w.en);}
-// 単語＋短文音声（終了後に自動で次へ）
 let fullSpeakTimer=null;
 function speakFull(){
   const w=WORDS[flashIdx];if(!w||isMuted)return;
   synth.cancel();
   if(fullSpeakTimer){clearTimeout(fullSpeakTimer);fullSpeakTimer=null;}
-  const u1=new SpeechSynthesisUtterance(w.en);
-  u1.lang='en-US';u1.rate=0.85;if(_enVoice)u1.voice=_enVoice;
-  const u2=new SpeechSynthesisUtterance(w.sentence||'');
-  u2.lang='en-US';u2.rate=0.82;if(_enVoice)u2.voice=_enVoice;
-  // 短文読み上げ終了後、自動モード中なら次へ
-  u2.onend=()=>{
-    if(autoMode==='full'&&autoTimer){
-      fullSpeakTimer=setTimeout(()=>{flashNext();},600);
-    }
-  };
+  const u1=new SpeechSynthesisUtterance(w.en);u1.lang='en-US';u1.rate=0.85;if(_enVoice)u1.voice=_enVoice;
+  const u2=new SpeechSynthesisUtterance(w.sentence||'');u2.lang='en-US';u2.rate=0.82;if(_enVoice)u2.voice=_enVoice;
+  u2.onend=()=>{if(autoMode==='full'&&autoTimer){fullSpeakTimer=setTimeout(()=>{flashNext();},600);}};
   synth.speak(u1);synth.speak(u2);
 }
 document.getElementById('muteWrap').addEventListener('click',()=>{isMuted=!isMuted;document.getElementById('muteTrack').classList.toggle('on',!isMuted);document.getElementById('muteLabel').textContent=isMuted?'🔇 音声OFF':'🔊 音声ON';if(isMuted){synth.cancel();if(fullSpeakTimer){clearTimeout(fullSpeakTimer);fullSpeakTimer=null;}}});
@@ -424,15 +406,13 @@ function initWordList(){
   });
   updateStarCount();
 }
-// ===== フラッシュカード =====
 let flashIdx=0,flashPhase='A',flashRevealed=false;
-let autoTimer=null,autoPaused=false,autoSec=3,autoMode='word'; // autoMode: 'word' or 'full'
+let autoTimer=null,autoPaused=false,autoSec=3,autoMode='word';
 function updatePhaseBadge(){const b=document.getElementById('flashPhaseBadge');b.textContent=flashPhase==='A'?'フェーズA：英語→意味（タップでめくる）':'フェーズB：意味→英語（タップでめくる）';b.className='flash-phase-badge phase'+flashPhase;}
 function renderFlash(){
   const w=WORDS[flashIdx];if(!w)return;
   flashRevealed=false;
-  const front=document.getElementById('flashFront');
-  const back=document.getElementById('flashBack');
+  const front=document.getElementById('flashFront');const back=document.getElementById('flashBack');
   if(flashPhase==='A'){front.style.display='block';back.style.display='none';}
   else{front.style.display='none';back.style.display='block';}
   document.getElementById('flashEn').textContent=w.en;
@@ -457,54 +437,33 @@ function onFlashTap(){
 function flashNext(){
   if(fullSpeakTimer){clearTimeout(fullSpeakTimer);fullSpeakTimer=null;}
   flashIdx++;
-  if(flashIdx>=WORDS.length){
-    if(flashPhase==='A'){flashPhase='B';flashIdx=0;updatePhaseBadge();renderFlash();}
-    else{stopAuto();goNext();}
-    return;
-  }
+  if(flashIdx>=WORDS.length){if(flashPhase==='A'){flashPhase='B';flashIdx=0;updatePhaseBadge();renderFlash();}else{stopAuto();goNext();}return;}
   renderFlash();
 }
 function flashPrev(){
   if(fullSpeakTimer){clearTimeout(fullSpeakTimer);fullSpeakTimer=null;}
-  if(flashIdx>0){flashIdx--;renderFlash();}
-  else if(flashPhase==='B'){flashPhase='A';flashIdx=WORDS.length-1;updatePhaseBadge();renderFlash();}
+  if(flashIdx>0){flashIdx--;renderFlash();}else if(flashPhase==='B'){flashPhase='A';flashIdx=WORDS.length-1;updatePhaseBadge();renderFlash();}
 }
 function toggleFlashStar(){const w=WORDS[flashIdx];if(!w)return;const v=toggleStar(w.en);document.getElementById('flashStarBtn').textContent=v?'⭐':'☆';const chk=document.getElementById('chk_'+flashIdx);if(chk){chk.checked=v;chk.nextElementSibling.textContent=v?'⭐':'☆';}}
-// 自動モード切替：単語のみ／単語＋短文で挙動が変わる
 function updateSpeedUI(){
   const isFullMode=autoMode==='full';
   document.getElementById('speedNote').style.display=isFullMode?'none':'block';
   document.getElementById('speedWarn').style.display=isFullMode?'block':'none';
-  document.querySelectorAll('.spd-btn').forEach(b=>{
-    b.classList.toggle('disabled-btn', isFullMode && b.dataset.sec!=='0');
-    b.disabled=isFullMode && b.dataset.sec!=='0';
-  });
+  document.querySelectorAll('.spd-btn').forEach(b=>{b.classList.toggle('disabled-btn',isFullMode&&b.dataset.sec!=='0');b.disabled=isFullMode&&b.dataset.sec!=='0';});
 }
-// 自動再生（単語のみモード）
 function toggleAuto(){
   if(autoTimer){stopAuto();return;}
   document.getElementById('fcPlayBtn').style.display='none';
   document.getElementById('fcPauseBtn').style.display='inline-block';
-  autoPaused=false;
-  document.getElementById('pauseOverlay').classList.remove('show');
+  autoPaused=false;document.getElementById('pauseOverlay').classList.remove('show');
   flashIdx=0;flashPhase='A';updatePhaseBadge();renderFlash();
   if(autoMode==='full'){
-    // 単語＋短文モード：speakFullのonendで次へ進む
-    autoTimer=setInterval(()=>{
-      if(autoPaused)return;
-      speakFull();
-    },100); // ダミータイマー（実際の進行はspeakFullのonendが担う）
-    clearInterval(autoTimer);autoTimer='full_mode'; // フラグとして使用
-    speakFull();
+    autoTimer='full_mode';speakFull();
   }else{
-    // 単語のみモード：速度ボタンに従う
     autoTimer=setInterval(()=>{
       if(autoPaused)return;
-      if(!flashRevealed){
-        flashRevealed=true;
-        if(flashPhase==='A')document.getElementById('flashBack').style.display='block';
-        else document.getElementById('flashFront').style.display='block';
-      }else flashNext();
+      if(!flashRevealed){flashRevealed=true;if(flashPhase==='A')document.getElementById('flashBack').style.display='block';else document.getElementById('flashFront').style.display='block';}
+      else flashNext();
     },autoSec*1000);
   }
 }
@@ -526,14 +485,8 @@ document.getElementById('speedBtns').addEventListener('click',e=>{
   e.target.classList.add('active');
   if(autoTimer){stopAuto();toggleAuto();};
 });
-// 単語＋短文ボタンクリックでモード切替表示更新
-document.getElementById('btnSpeakFull').addEventListener('click',()=>{
-  autoMode='full';updateSpeedUI();
-});
-document.querySelector('.speak-btn-word').addEventListener('click',()=>{
-  autoMode='word';updateSpeedUI();
-});
-// ===== 並べ替え =====
+document.getElementById('btnSpeakFull').addEventListener('click',()=>{autoMode='full';updateSpeedUI();});
+document.getElementById('btnSpeakWord').addEventListener('click',()=>{autoMode='word';updateSpeedUI();});
 let tapSel=null;
 function initTap(){tapSel=null;buildWordBank();buildTapTable();}
 function buildWordBank(){const bk=document.getElementById('wordBank');bk.innerHTML='';[...WORDS].sort(()=>Math.random()-0.5).forEach((w,i)=>{const c=document.createElement('span');c.className='chip';c.textContent=w.en;c.dataset.en=w.en;c.dataset.i=i;c.addEventListener('click',()=>onChipTap(c));bk.appendChild(c);});}
@@ -542,12 +495,10 @@ function buildTapTable(){const tb=document.getElementById('tapBody');tb.innerHTM
 function onZoneTap(dz){if(dz.classList.contains('correct'))return;if(dz.querySelector('.placed')){retChip(dz);return;}if(!tapSel)return;const p=document.createElement('span');p.className='placed';p.textContent=tapSel.textContent;p.dataset.ci=tapSel.dataset.i;dz.appendChild(p);tapSel.classList.add('used');tapSel.classList.remove('selected');tapSel=null;}
 function retChip(dz){const p=dz.querySelector('.placed');if(!p)return;const c=document.querySelector('.chip[data-i="'+p.dataset.ci+'"]');if(c)c.classList.remove('used','selected');dz.removeChild(p);dz.classList.remove('correct','wrong');}
 function judgeTap(){let ok=true;document.querySelectorAll('.dropzone').forEach(dz=>{if(dz.classList.contains('correct'))return;const p=dz.querySelector('.placed');if(!p){ok=false;return;}if(p.textContent.trim()===dz.dataset.en){dz.classList.add('correct');}else{dz.classList.add('wrong');ok=false;const w=WORDS[parseInt(dz.dataset.i)];if(w)addReview(w);setTimeout(()=>retChip(dz),600);}});if(ok)setTimeout(()=>goNext(),400);}
-// ===== 意味クイズ =====
 let qIdx=0,qOk=0,qNg=0,qAnswered=false,qOrder=[];
 function initQuiz(){qIdx=0;qOk=0;qNg=0;qOrder=[...WORDS].sort(()=>Math.random()-0.5);document.getElementById('quizScore').classList.remove('show');renderQuiz();}
 function renderQuiz(){qAnswered=false;const w=qOrder[qIdx];if(!w)return;document.getElementById('quizQ').textContent=w.en;document.getElementById('quizQkana').textContent=w.kana;document.getElementById('quizNum').textContent=(qIdx+1)+'/'+qOrder.length;document.getElementById('quizResult').textContent='';document.getElementById('quizResult').className='quiz-result';const sw=document.getElementById('qSpeakWrap');sw.innerHTML='';sw.appendChild(makeSpeakBtn(w.en));speakIfOn(w.en);const pool=WORDS.filter(x=>x!==w).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.ja);const ch=[w.ja,...pool].sort(()=>Math.random()-0.5);const div=document.getElementById('choices');div.innerHTML='';ch.forEach(c=>{const b=document.createElement('button');b.className='choice-btn';b.textContent=c;b.addEventListener('click',()=>answerQuiz(b,c,w.ja));div.appendChild(b);});}
 function answerQuiz(btn,chosen,correct){if(qAnswered)return;qAnswered=true;const ok=chosen===correct;btn.classList.add(ok?'correct':'wrong');if(!ok){document.querySelectorAll('.choice-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('show-correct')});addReview(qOrder[qIdx]);qNg++;}else qOk++;document.getElementById('quizResult').textContent=ok?'✅ 正解！':'❌ 正解：'+correct;document.getElementById('quizResult').className='quiz-result '+(ok?'ok':'ng');const done=qIdx+1;document.getElementById('qOk').textContent=qOk;document.getElementById('qNg').textContent=qNg;document.getElementById('qRt').textContent=Math.round(qOk/done*100)+'%';document.getElementById('quizScore').classList.add('show');setTimeout(()=>{qIdx++;if(qIdx<qOrder.length)renderQuiz();},1300);}
-// ===== つづりクイズ =====
 let spIdx=0,spOk=0,spNg=0,spOrder=[],spAnswered=false;
 function initSpell(){spIdx=0;spOk=0;spNg=0;spAnswered=false;spOrder=[...WORDS].sort(()=>Math.random()-0.5);document.getElementById('spellScore').classList.remove('show');renderSpProg();renderSpell();}
 function renderSpProg(){const pg=document.getElementById('spellProg');pg.innerHTML='';spOrder.forEach((_,i)=>{const d=document.createElement('div');d.className='sp-dot'+(i<spIdx?(spOrder[i]._ok?' ok':' ng'):(i===spIdx?' cur':''));d.textContent=i+1;pg.appendChild(d);});}
