@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ターゲット1900 復習テスト</title>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#f0f4f8;min-height:100vh;padding-bottom:100px;}
+.header{background:linear-gradient(135deg,#7c2d12,#dc2626);color:white;padding:12px 16px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+.header-top{display:flex;align-items:center;gap:8px;}
+.header h1{font-size:0.95rem;flex:1;}
+.btn-hd{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:8px;padding:5px 12px;font-size:0.78rem;cursor:pointer;}
+.btn-hd:hover{background:rgba(255,255,255,0.35);}
+.wrap{max-width:560px;margin:0 auto;padding:16px;}
+/* 空状態 */
+.empty-box{background:white;border-radius:16px;padding:40px 20px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);}
+.empty-icon{font-size:3rem;margin-bottom:12px;}
+.empty-msg{font-size:0.9rem;color:#888;line-height:1.7;}
+/* 単語リスト */
+.review-header{background:white;border-radius:14px;padding:12px 16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.review-count{font-size:0.9rem;font-weight:bold;color:#7c2d12;}
+.review-count span{color:#dc2626;font-size:1.2rem;}
+.btn-start{padding:9px 20px;background:linear-gradient(135deg,#dc2626,#7c2d12);color:white;border:none;border-radius:20px;font-size:0.86rem;font-weight:bold;cursor:pointer;box-shadow:0 3px 8px rgba(124,45,18,0.3);}
+.btn-start:hover{transform:translateY(-1px);}
+.word-list{background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:12px;}
+.word-list table{width:100%;border-collapse:collapse;}
+.word-list th{background:#7c2d12;color:white;padding:8px 10px;font-size:0.74rem;text-align:left;}
+.word-list td{border-bottom:1px solid #fecaca;padding:8px 10px;font-size:0.84rem;vertical-align:middle;}
+.word-list tr:last-child td{border-bottom:none;}
+.word-list tr:nth-child(even) td{background:#fef2f2;}
+.td-en{font-weight:bold;color:#7c2d12;}
+.td-kana{color:#888;font-size:0.72rem;}
+.td-ja{color:#333;}
+.td-rm{text-align:center;width:36px;}
+.rm-btn{background:none;border:none;color:#fca5a5;font-size:1.1rem;cursor:pointer;}
+.rm-btn:hover{color:#e53935;}
+/* クイズ */
+.quiz-panel{display:none;}
+.mode-tabs{display:flex;gap:8px;margin-bottom:12px;}
+.tab-btn{flex:1;padding:9px;border:2px solid #fecaca;border-radius:12px;background:white;font-size:0.82rem;font-weight:bold;color:#888;cursor:pointer;transition:all .15s;}
+.tab-btn.active{border-color:#dc2626;background:#dc2626;color:white;}
+.score-bar{background:white;border-radius:12px;padding:8px 14px;box-shadow:0 2px 10px rgba(0,0,0,0.08);display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.s-item{text-align:center;}.s-val{font-size:1.2rem;font-weight:bold;}.s-lbl{font-size:0.62rem;color:#888;}
+.s-ok{color:#22a06b;}.s-ng{color:#e53935;}.s-rt{color:#7c2d12;}
+.quiz-card{background:white;border-radius:20px;box-shadow:0 4px 20px rgba(124,45,18,0.12);padding:22px 20px;text-align:center;margin-bottom:12px;}
+.quiz-q{font-size:1.75rem;font-weight:bold;color:#7c2d12;margin-bottom:3px;}
+.quiz-kana{font-size:0.83rem;color:#888;margin-bottom:5px;}
+.quiz-num{font-size:0.7rem;color:#aaa;}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.choice-btn{padding:12px 7px;border:2px solid #fecaca;border-radius:14px;background:white;font-size:0.86rem;font-weight:bold;color:#333;cursor:pointer;transition:all .2s;line-height:1.4;}
+.choice-btn:hover{border-color:#dc2626;background:#fef2f2;color:#7c2d12;}
+.choice-btn.correct{border-color:#22a06b;background:#e6f4ee;color:#145e3e;}
+.choice-btn.wrong{border-color:#e53935;background:#fdecea;color:#b71c1c;animation:shake .3s;}
+.choice-btn.show-correct{border-color:#22a06b;background:#e6f4ee;color:#145e3e;}
+.quiz-result{font-size:0.9rem;font-weight:bold;text-align:center;min-height:24px;margin-bottom:5px;}
+.quiz-result.ok{color:#22a06b;}.quiz-result.ng{color:#e53935;}
+/* つづり */
+.spell-prog{display:flex;gap:4px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;}
+.sp-dot{width:24px;height:24px;border-radius:50%;border:2px solid #fecaca;display:flex;align-items:center;justify-content:center;font-size:0.62rem;color:#aaa;transition:all .2s;}
+.sp-dot.ok{background:#22a06b;border-color:#22a06b;color:white;}
+.sp-dot.ng{background:#e53935;border-color:#e53935;color:white;}
+.sp-dot.cur{border-color:#dc2626;color:#dc2626;font-weight:bold;}
+.spell-card{background:white;border-radius:20px;box-shadow:0 4px 20px rgba(124,45,18,0.12);padding:22px 20px;text-align:center;margin-bottom:10px;}
+.spell-ja{font-size:1.45rem;font-weight:bold;color:#7c2d12;margin-bottom:3px;}
+.spell-kana{font-size:0.83rem;color:#888;}
+.spell-num{font-size:0.7rem;color:#aaa;margin-top:5px;}
+.spell-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.spell-choice{padding:11px 7px;border:2px solid #fecaca;border-radius:14px;background:white;font-size:0.85rem;font-weight:bold;color:#7c2d12;cursor:pointer;transition:all .2s;font-family:monospace;letter-spacing:.5px;}
+.spell-choice:hover{border-color:#dc2626;background:#fef2f2;}
+.spell-choice.correct{border-color:#22a06b;background:#e6f4ee;color:#145e3e;}
+.spell-choice.wrong{border-color:#e53935;background:#fdecea;color:#b71c1c;animation:shake .3s;}
+.spell-choice.show-correct{border-color:#22a06b;background:#e6f4ee;color:#145e3e;}
+.spell-result{font-size:0.9rem;font-weight:bold;text-align:center;min-height:24px;margin-bottom:5px;}
+.spell-result.ok{color:#22a06b;}.spell-result.ng{color:#e53935;}
+/* 完了 */
+.complete-box{display:none;background:white;border-radius:20px;box-shadow:0 4px 20px rgba(124,45,18,0.15);padding:30px 20px;text-align:center;}
+.complete-box.show{display:block;}
+.complete-icon{font-size:3rem;margin-bottom:8px;}
+.complete-title{font-size:1.4rem;font-weight:bold;color:#7c2d12;margin-bottom:6px;}
+.complete-score{font-size:2rem;font-weight:bold;color:#dc2626;margin-bottom:4px;}
+.complete-sub{font-size:0.85rem;color:#888;margin-bottom:20px;}
+.complete-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.c-btn{padding:10px 20px;border:none;border-radius:20px;font-size:0.86rem;font-weight:bold;cursor:pointer;}
+.c-again{background:linear-gradient(135deg,#dc2626,#7c2d12);color:white;}
+.c-list{background:#eee;color:#555;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+@media(max-width:400px){.spell-choices,.choices{grid-template-columns:1fr;}}
+.speak-btn{background:linear-gradient(135deg,#dc2626,#7c2d12);border:none;border-radius:18px;padding:5px 12px;cursor:pointer;color:white;font-size:0.72rem;font-weight:bold;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;}
+.speak-btn svg{width:12px;height:12px;fill:white;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <button class="btn-hd" onclick="window.location.href='t_index.html'">🏠 一覧</button>
+    <h1>⭐ 復習テスト</h1>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- 単語一覧パネル -->
+  <div id="listPanel">
+    <div id="emptyBox" class="empty-box" style="display:none;">
+      <div class="empty-icon">⭐</div>
+      <div class="empty-msg">チェックした単語がありません。<br>各単元の一覧画面で ⭐ をタップすると<br>ここに集まります。</div>
+      <br>
+      <button class="btn-start" onclick="window.location.href='t_index.html'">📋 単元一覧へ</button>
+    </div>
+    <div id="wordPanel" style="display:none;">
+      <div class="review-header">
+        <div class="review-count">チェック済み：<span id="wordCount">0</span> 語</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn-start" onclick="startQuiz()">❓ 意味クイズ</button>
+          <button class="btn-start" style="background:linear-gradient(135deg,#2563eb,#1e3a8a);" onclick="startSpell()">✍️ つづりクイズ</button>
+        </div>
+      </div>
+      <div class="word-list">
+        <table>
+          <thead><tr><th>英単語</th><th>読み方</th><th>意味</th><th></th></tr></thead>
+          <tbody id="wordListBody"></tbody>
+        </table>
+      </div>
+      <div style="text-align:center;margin-top:8px;">
+        <button onclick="clearAll()" style="background:none;border:none;color:#aaa;font-size:0.75rem;cursor:pointer;text-decoration:underline;">⭐ チェックをすべて解除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- クイズパネル -->
+  <div class="quiz-panel" id="quizPanel">
+    <div class="mode-tabs">
+      <button class="tab-btn active" id="tabQuiz" onclick="switchMode('quiz')">❓ 意味クイズ</button>
+      <button class="tab-btn" id="tabSpell" onclick="switchMode('spell')">✍️ つづりクイズ</button>
+    </div>
+    <!-- 意味クイズ -->
+    <div id="quizArea">
+      <div class="score-bar">
+        <div class="s-item"><div class="s-val s-ok" id="qOk">0</div><div class="s-lbl">✅ 正解</div></div>
+        <div class="s-item"><div class="s-val s-ng" id="qNg">0</div><div class="s-lbl">❌ 不正解</div></div>
+        <div class="s-item"><div class="s-val s-rt" id="qRt">--%</div><div class="s-lbl">正解率</div></div>
+      </div>
+      <div class="quiz-card">
+        <div id="qSpeakWrap" style="margin-bottom:8px;"></div>
+        <div class="quiz-q" id="quizQ">-</div>
+        <div class="quiz-kana" id="quizKana"></div>
+        <div class="quiz-num" id="quizNum"></div>
+      </div>
+      <div class="choices" id="choices"></div>
+      <div class="quiz-result" id="quizResult"></div>
+    </div>
+    <!-- つづりクイズ -->
+    <div id="spellArea" style="display:none;">
+      <div class="spell-prog" id="spellProg"></div>
+      <div class="score-bar">
+        <div class="s-item"><div class="s-val s-ok" id="spOk">0</div><div class="s-lbl">✅ 正解</div></div>
+        <div class="s-item"><div class="s-val s-ng" id="spNg">0</div><div class="s-lbl">❌ 不正解</div></div>
+        <div class="s-item"><div class="s-val s-rt" id="spRt">--%</div><div class="s-lbl">正解率</div></div>
+      </div>
+      <div class="spell-card">
+        <div id="spSpeakWrap" style="margin-bottom:7px;"></div>
+        <div class="spell-ja" id="spellJa">-</div>
+        <div class="spell-kana" id="spellKana"></div>
+        <div class="spell-num" id="spellNum"></div>
+      </div>
+      <div class="spell-choices" id="spellChoices"></div>
+      <div class="spell-result" id="spellResult"></div>
+    </div>
+    <!-- 完了 -->
+    <div class="complete-box" id="completeBox">
+      <div class="complete-icon">🎉</div>
+      <div class="complete-title" id="completeTitle">復習完了！</div>
+      <div class="complete-score" id="completeScore"></div>
+      <div class="complete-sub" id="completeSub"></div>
+      <div class="complete-btns">
+        <button class="c-btn c-again" id="btnAgain">🔄 もう一度</button>
+        <button class="c-btn c-list" onclick="backToList()">📋 リストに戻る</button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:10px;">
+      <button onclick="backToList()" style="background:none;border:none;color:#aaa;font-size:0.78rem;cursor:pointer;text-decoration:underline;">← リストに戻る</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== LocalStorage から全単元の⭐単語を収集 =====
+const synth = window.speechSynthesis;
+let _enVoice = null;
+function loadEnVoice(){const vs=synth.getVoices();const pref=['en-US','en-GB','en-AU'];for(const lang of pref){const v=vs.find(x=>x.lang===lang&&!x.name.includes('Japanese'));if(v){_enVoice=v;return;}}const any=vs.find(x=>x.lang.startsWith('en'));if(any)_enVoice=any;}
+if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=loadEnVoice;loadEnVoice();
+function speak(t){synth.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.85;if(_enVoice)u.voice=_enVoice;synth.speak(u);}
+function makeSpeakBtn(en){const b=document.createElement('button');b.className='speak-btn';b.innerHTML='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> 音声';b.addEventListener('click',()=>speak(en));return b;}
+
+// 全単元のstar_T_XXX キーをスキャン
+function collectStarredWords(){
+  const starred = [];
+  const keys = [];
+  try{ for(let i=0;i<localStorage.length;i++) keys.push(localStorage.key(i)); }catch(e){}
+  const starKeys = keys.filter(k => k && k.startsWith('star_T_'));
+  starKeys.forEach(key => {
+    try{
+      const stars = JSON.parse(localStorage.getItem(key)) || {};
+      // keyは "star_T_001" 形式 → 単元番号を取得
+      const unitMatch = key.match(/star_T_(\d+)/);
+      if(!unitMatch) return;
+      Object.keys(stars).forEach(en => {
+        if(stars[en] && !starred.some(w => w.en === en)){
+          starred.push({en, kana:'', ja:'', _key: key});
+        }
+      });
+    }catch(e){}
+  });
+  // review_T_XXX キーから単語詳細（kana/ja）を補完
+  starKeys.forEach(key => {
+    const revKey = key.replace('star_','').replace(/_p$/,'') + '_r';
+    // _rキーからja/kanaを取得
+    try{
+      const rKey = key.replace('star_','') + '_r';
+      const rv = JSON.parse(localStorage.getItem(rKey)) || [];
+      rv.forEach(r => {
+        const w = starred.find(s => s.en === r.en);
+        if(w){ w.kana = r.kana || ''; w.ja = r.ja || ''; }
+      });
+    }catch(e){}
+  });
+  return starred;
+}
+
+// 全単元の_pキーから単語データ（kana/ja）を補完する別手段
+// → _rキーに頼らず、単語リストを別途収集
+// 実際はページロード時にWordsDBを構築するアプローチが確実
+// ここでは star_T_XXX から en だけ取得し、ja/kanaは別のstorageキーから引く
+
+let REVIEW_WORDS = [];
+
+function loadReviewWords(){
+  const keys = [];
+  try{ for(let i=0;i<localStorage.length;i++) keys.push(localStorage.key(i)); }catch(e){}
+  
+  // star_ キーから⭐単語のenを収集
+  const starMap = {}; // en -> true
+  keys.filter(k=>k&&k.startsWith('star_T_')).forEach(key=>{
+    try{
+      const obj = JSON.parse(localStorage.getItem(key))||{};
+      Object.keys(obj).forEach(en=>{ if(obj[en]) starMap[en]=true; });
+    }catch(e){}
+  });
+  
+  // _r キー（復習リスト）から kana/ja を補完
+  const detailMap = {}; // en -> {kana, ja}
+  keys.filter(k=>k&&k.endsWith('_r')&&k.startsWith('T_')).forEach(key=>{
+    try{
+      const arr = JSON.parse(localStorage.getItem(key))||[];
+      arr.forEach(w=>{ if(w.en) detailMap[w.en]={kana:w.kana||'',ja:w.ja||''}; });
+    }catch(e){}
+  });
+  
+  REVIEW_WORDS = Object.keys(starMap).map(en=>({
+    en,
+    kana: detailMap[en]?.kana || '',
+    ja:   detailMap[en]?.ja   || '（意味は各単元で確認）',
+  }));
+  return REVIEW_WORDS;
+}
+
+function renderList(){
+  const words = loadReviewWords();
+  if(words.length === 0){
+    document.getElementById('emptyBox').style.display='block';
+    document.getElementById('wordPanel').style.display='none';
+    return;
+  }
+  document.getElementById('emptyBox').style.display='none';
+  document.getElementById('wordPanel').style.display='block';
+  document.getElementById('wordCount').textContent = words.length;
+  const tb = document.getElementById('wordListBody');
+  tb.innerHTML='';
+  words.forEach((w,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="td-en">${w.en}</td><td class="td-kana">${w.kana}</td><td class="td-ja">${w.ja}</td><td class="td-rm"><button class="rm-btn" onclick="removeWord('${w.en.replace(/'/g,"\'")}')">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function removeWord(en){
+  // 全star_T_XXXキーから該当語を削除
+  const keys=[];
+  try{for(let i=0;i<localStorage.length;i++)keys.push(localStorage.key(i));}catch(e){}
+  keys.filter(k=>k&&k.startsWith('star_T_')).forEach(key=>{
+    try{
+      const obj=JSON.parse(localStorage.getItem(key))||{};
+      if(obj[en]){delete obj[en];localStorage.setItem(key,JSON.stringify(obj));}
+    }catch(e){}
+  });
+  renderList();
+}
+
+function clearAll(){
+  if(!confirm('チェックをすべて解除しますか？')) return;
+  const keys=[];
+  try{for(let i=0;i<localStorage.length;i++)keys.push(localStorage.key(i));}catch(e){}
+  keys.filter(k=>k&&k.startsWith('star_T_')).forEach(key=>{
+    try{localStorage.setItem(key,JSON.stringify({}));}catch(e){}
+  });
+  renderList();
+}
+
+// ===== クイズ =====
+let quizMode='quiz', quizOrder=[], qIdx=0, qOk=0, qNg=0, qAnswered=false;
+let spOrder=[], spIdx=0, spOk=0, spNg=0, spAnswered=false;
+
+function startQuiz(){ launchPanel('quiz'); }
+function startSpell(){ launchPanel('spell'); }
+
+function launchPanel(mode){
+  const words = loadReviewWords();
+  if(words.length < 2){ alert('復習単語が2語以上必要です。'); return; }
+  REVIEW_WORDS = words;
+  document.getElementById('listPanel').style.display='none';
+  document.getElementById('quizPanel').style.display='block';
+  document.getElementById('completeBox').classList.remove('show');
+  switchMode(mode);
+}
+
+function switchMode(mode){
+  quizMode = mode;
+  document.getElementById('tabQuiz').classList.toggle('active', mode==='quiz');
+  document.getElementById('tabSpell').classList.toggle('active', mode==='spell');
+  document.getElementById('quizArea').style.display = mode==='quiz'?'block':'none';
+  document.getElementById('spellArea').style.display = mode==='spell'?'block':'none';
+  document.getElementById('completeBox').classList.remove('show');
+  if(mode==='quiz') initQuiz();
+  else initSpell();
+}
+
+function initQuiz(){
+  qIdx=0;qOk=0;qNg=0;
+  quizOrder=[...REVIEW_WORDS].sort(()=>Math.random()-0.5);
+  document.getElementById('qOk').textContent='0';
+  document.getElementById('qNg').textContent='0';
+  document.getElementById('qRt').textContent='--%';
+  renderQuiz();
+}
+function renderQuiz(){
+  qAnswered=false;
+  const w=quizOrder[qIdx];if(!w)return;
+  document.getElementById('quizQ').textContent=w.en;
+  document.getElementById('quizKana').textContent=w.kana;
+  document.getElementById('quizNum').textContent=(qIdx+1)+'/'+quizOrder.length;
+  document.getElementById('quizResult').textContent='';
+  document.getElementById('quizResult').className='quiz-result';
+  const sw=document.getElementById('qSpeakWrap');sw.innerHTML='';sw.appendChild(makeSpeakBtn(w.en));speak(w.en);
+  const pool=REVIEW_WORDS.filter(x=>x.en!==w.en).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.ja);
+  const ch=[w.ja,...pool].sort(()=>Math.random()-0.5);
+  const div=document.getElementById('choices');div.innerHTML='';
+  ch.forEach(c=>{const b=document.createElement('button');b.className='choice-btn';b.textContent=c;b.addEventListener('click',()=>answerQuiz(b,c,w.ja));div.appendChild(b);});
+}
+function answerQuiz(btn,chosen,correct){
+  if(qAnswered)return;qAnswered=true;
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok){document.querySelectorAll('.choice-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('show-correct')});qNg++;}
+  else qOk++;
+  document.getElementById('quizResult').textContent=ok?'✅ 正解！':'❌ 正解：'+correct;
+  document.getElementById('quizResult').className='quiz-result '+(ok?'ok':'ng');
+  const done=qIdx+1;
+  document.getElementById('qOk').textContent=qOk;
+  document.getElementById('qNg').textContent=qNg;
+  document.getElementById('qRt').textContent=Math.round(qOk/done*100)+'%';
+  setTimeout(()=>{qIdx++;if(qIdx<quizOrder.length)renderQuiz();else showComplete('quiz');},1300);
+}
+
+function initSpell(){
+  spIdx=0;spOk=0;spNg=0;
+  spOrder=[...REVIEW_WORDS].sort(()=>Math.random()-0.5);
+  document.getElementById('spOk').textContent='0';
+  document.getElementById('spNg').textContent='0';
+  document.getElementById('spRt').textContent='--%';
+  renderSpProg();renderSpell();
+}
+function renderSpProg(){
+  const pg=document.getElementById('spellProg');pg.innerHTML='';
+  spOrder.forEach((_,i)=>{const d=document.createElement('div');d.className='sp-dot'+(i<spIdx?(spOrder[i]._ok?' ok':' ng'):(i===spIdx?' cur':''));d.textContent=i+1;pg.appendChild(d);});
+}
+function renderSpell(){
+  spAnswered=false;
+  const w=spOrder[spIdx];if(!w)return;
+  document.getElementById('spellJa').textContent=w.ja;
+  document.getElementById('spellKana').textContent=w.kana;
+  document.getElementById('spellNum').textContent=(spIdx+1)+'/'+spOrder.length;
+  document.getElementById('spellResult').textContent='';
+  document.getElementById('spellResult').className='spell-result';
+  const sw=document.getElementById('spSpeakWrap');sw.innerHTML='';sw.appendChild(makeSpeakBtn(w.en));speak(w.en);
+  const pool=REVIEW_WORDS.filter(x=>x.en!==w.en).sort((a,b)=>Math.abs(a.en.length-w.en.length)-Math.abs(b.en.length-w.en.length)).slice(0,6).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.en);
+  while(pool.length<3){const ex=REVIEW_WORDS.filter(x=>x.en!==w.en&&!pool.includes(x.en)).sort(()=>Math.random()-0.5)[0];if(ex)pool.push(ex.en);else break;}
+  const ch=[w.en,...pool].sort(()=>Math.random()-0.5);
+  const div=document.getElementById('spellChoices');div.innerHTML='';
+  ch.forEach(c=>{const b=document.createElement('button');b.className='spell-choice';b.textContent=c;b.addEventListener('click',()=>answerSpell(b,c,w.en));div.appendChild(b);});
+  renderSpProg();
+}
+function answerSpell(btn,chosen,correct){
+  if(spAnswered)return;spAnswered=true;
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok){document.querySelectorAll('.spell-choice').forEach(b=>{if(b.textContent===correct)b.classList.add('show-correct')});spNg++;spOrder[spIdx]._ok=false;}
+  else{spOk++;spOrder[spIdx]._ok=true;}
+  document.getElementById('spellResult').textContent=ok?'✅ 正解！':'❌ 正解：'+correct;
+  document.getElementById('spellResult').className='spell-result '+(ok?'ok':'ng');
+  const done=spIdx+1;
+  document.getElementById('spOk').textContent=spOk;
+  document.getElementById('spNg').textContent=spNg;
+  document.getElementById('spRt').textContent=Math.round(spOk/done*100)+'%';
+  setTimeout(()=>{spIdx++;if(spIdx<spOrder.length)renderSpell();else showComplete('spell');},1000);
+}
+
+function showComplete(mode){
+  const ok=mode==='quiz'?qOk:spOk;
+  const total=mode==='quiz'?quizOrder.length:spOrder.length;
+  const pct=Math.round(ok/total*100);
+  document.getElementById('completeBox').classList.add('show');
+  document.getElementById('completeTitle').textContent=mode==='quiz'?'意味クイズ完了！':'つづりクイズ完了！';
+  document.getElementById('completeScore').textContent=ok+' / '+total+' 正解';
+  document.getElementById('completeSub').textContent='正解率 '+pct+'%　'+(pct===100?'🎊 全問正解！':'');
+  document.getElementById('btnAgain').onclick=()=>{document.getElementById('completeBox').classList.remove('show');if(mode==='quiz')initQuiz();else initSpell();};
+}
+
+function backToList(){
+  document.getElementById('listPanel').style.display='block';
+  document.getElementById('quizPanel').style.display='none';
+  renderList();
+}
+
+// 初期化
+renderList();
+</script>
+</body>
+</html>
